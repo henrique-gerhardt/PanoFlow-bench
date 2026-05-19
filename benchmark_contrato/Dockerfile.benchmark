@@ -1,0 +1,30 @@
+FROM pytorch/pytorch:2.1.2-cuda11.8-cudnn8-devel
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/app
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    ca-certificates \
+    git \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . /app
+
+RUN python -m pip install --upgrade pip setuptools wheel && \
+    python -m pip install --index-url https://download.pytorch.org/whl/cu118 torchvision==0.16.2 && \
+    python -m pip install "numpy<2" scipy Pillow pyyaml opencv-python-headless psutil && \
+    python setup.py develop
+
+RUN chmod +x /app/benchmark_contrato/entrypoint.sh
+
+ENTRYPOINT ["/app/benchmark_contrato/entrypoint.sh"]
+CMD ["official_reproduction"]

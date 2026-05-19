@@ -1,0 +1,31 @@
+datasets:
+  flow360:
+    enabled: true
+    dataset_name: "Flow360"
+    adapter: "flow360_sequence_npy"
+    root_candidates:
+      - "${FLOW360_ROOT}"
+      - "/Volumes/External SSD/Mestrado/Datasets/FLOW360_train_test"
+    split: "test"
+    image_dir: "frames"
+    forward_flow_dir: "fflows"
+    backward_flow_dir: "bflows"
+    image_ext: ".png"
+    flow_ext: ".npy"
+    valid_mask:
+      type: "finite_and_reasonable_magnitude"
+      max_abs_flow: 1000.0
+    notes:
+      - "Layout real inspecionado: split/<scene_id>/{frames,fflows,bflows}."
+      - "Nao ha subpastas cloud/fog/rain/sunny disponiveis no dataset encontrado."
+
+  omni:
+    enabled: true
+    dataset_name: "Omni"
+    adapter: "omni_official_layout"
+    root_candidates:
+      - "${OMNI_ROOT}"
+    split: "validation"
+    notes:
+      - "Suporte mantido via API oficial."
+      - "Nenhum dataset Omni foi encontrado no workspace atual."

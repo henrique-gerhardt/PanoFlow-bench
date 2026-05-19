@@ -1,0 +1,39 @@
+scenario: "official_reproduction"
+
+official_reproduction:
+  model: "PanoFlow(CSFlow)"
+  dataset_key: "flow360"
+  validation: ["Flow360"]
+  checkpoint_candidates:
+    - "${PANOFLOW_CHECKPOINT}"
+    - "./checkpoints/PanoFlow(CSFlow)-wo-CFE.pth"
+  use_cfe: true
+  cvt_gt: true
+  iters: 20
+  eval_iters: 12
+
+standardized_efficiency:
+  model: "PanoFlow(CSFlow)"
+  dataset_key: "flow360"
+  validation: ["Flow360"]
+  checkpoint_candidates:
+    - "${PANOFLOW_CHECKPOINT}"
+    - "./checkpoints/PanoFlow(CSFlow)-wo-CFE.pth"
+  use_cfe: true
+  cvt_gt: true
+  input_height: 512
+  input_width: 1024
+  iters: 20
+  eval_iters: 12
+
+regional_robustness:
+  model: "PanoFlow(CSFlow)"
+  dataset_key: "flow360"
+  validation: ["Flow360"]
+  checkpoint_candidates:
+    - "${PANOFLOW_CHECKPOINT}"
+    - "./checkpoints/PanoFlow(CSFlow)-wo-CFE.pth"
+  use_cfe: true
+  cvt_gt: true
+  iters: 20
+  eval_iters: 12

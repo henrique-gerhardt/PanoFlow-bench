@@ -1,0 +1,53 @@
+contract_version: 1.0
+contract_root: benchmark_contrato
+method_name: panoflow
+method_family: panoramic-distortion-and-cyclic-flow-estimation
+paper_year: 2022
+framework: pytorch
+supports_gpu: true
+
+paper_reference:
+  title: "PanoFlow: Learning Optical Flow for Panoramic Images"
+  repo: "https://github.com/MasterHow/PanoFlow"
+
+input_format:
+  image_layout: erp
+  tensor_shape: [B, C, H, W]
+
+output_format:
+  flow_layout: erp
+  flow_tensor_shape: [B, 2, H, W]
+
+datasets_supported:
+  - flow360
+  - omni
+
+workspace_discovery:
+  checkpoints_found: []
+  dataset_found:
+    flow360_root: "/Volumes/External SSD/Mestrado/Datasets/FLOW360_train_test"
+    flow360_layout: "split/<scene_id>/{frames,fflows,bflows}"
+
+checkpoints:
+  env_var: "PANOFLOW_CHECKPOINT"
+  official_readme_candidate: "./checkpoints/PanoFlow(CSFlow)-wo-CFE.pth"
+  notes:
+    - "Nenhum checkpoint foi encontrado dentro do workspace atual."
+    - "O contrato exige informar o checkpoint real via variavel de ambiente ou volume montado."
+
+scenarios_supported:
+  - official_reproduction
+  - standardized_efficiency
+  - regional_robustness
+
+official_eval:
+  entry_script: "./tools/eval.py"
+  supported_models:
+    - "CSFlow"
+    - "RAFT"
+    - "PanoFlow(CSFlow)"
+    - "PanoFlow(RAFT)"
+  supports_cfe: true
+  notes:
+    - "O contrato reutiliza a inicializacao oficial do modelo e a logica oficial de inferencia."
+    - "O dataset Flow360 disponivel no workspace nao esta no layout weather-based esperado pelo CLI original."

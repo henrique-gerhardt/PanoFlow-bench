@@ -1,0 +1,35 @@
+runtime:
+  device: "cuda"
+  gpus: [0]
+  precision: "fp32"
+  warmup_runs: 10
+  measured_runs: 30
+  num_workers: 0
+  fail_on_missing_gpu: true
+  use_official_cli_when_supported: true
+
+profiling:
+  enable_latency: true
+  enable_memory: true
+  enable_params: true
+  enable_flops: false
+  notes:
+    - "FLOPs ficam null ate existir um caminho confiavel de tracing."
+    - "A latencia padronizada usa dummy input ERP 1024x512."
+
+regional_metrics:
+  latitude_bins_deg: [-90, -60, -30, 0, 30, 60, 90]
+  equatorial_band_abs_deg: 30
+  polar_band_abs_deg: 60
+
+standardized_efficiency:
+  input_height: 512
+  input_width: 1024
+  use_dummy_input: true
+  batch_size: 1
+
+docker:
+  expected_runtime: "nvidia"
+  notes:
+    - "O container assume NVIDIA Container Toolkit no host Linux."
+    - "A imagem usa runtime CUDA 11.8 para manter compatibilidade conservadora com o codigo de 2022."
